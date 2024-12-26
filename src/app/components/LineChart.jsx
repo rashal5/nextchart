@@ -12,7 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceLine, // Import for adding reference line
+  ReferenceLine, 
 } from 'recharts';
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -34,8 +34,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const FullScreenChart = () => {
   const [btcData, setBtcData] = useState([]);
-  const [averagePrice, setAveragePrice] = useState(0); // State to store the average price
-  const [activeChart, setActiveChart] = useState('area'); // Toggle between 'area' and 'line'
+  const [averagePrice, setAveragePrice] = useState(0); 
+  const [activeChart, setActiveChart] = useState('area'); 
 
   useEffect(() => {
     // Fetch BTC data for the past 7 days
@@ -69,21 +69,21 @@ const FullScreenChart = () => {
     fetchBtcData();
   }, []);
 
-  // Calculate min and max values for dynamic Y-Axis scaling
+
   const minPrice = Math.min(...btcData.map(item => item.price));
   const maxPrice = Math.max(...btcData.map(item => item.price));
-  const adjustedMin = minPrice - (maxPrice - minPrice) * 0.1; // Add some padding
-  const adjustedMax = maxPrice + (maxPrice - minPrice) * 0.1; // Add some padding
+  const adjustedMin = minPrice - (maxPrice - minPrice) * 0.1; 
+  const adjustedMax = maxPrice + (maxPrice - minPrice) * 0.1; 
 
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-100">
-      {/* Display average value in the background */}
+      
       <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-md">
         <span className="text-xl">7-Day Average BTC Price: </span>
         <span className="text-2xl font-bold">${averagePrice.toFixed(2)}</span>
       </div>
 
-      {/* Buttons to toggle between charts */}
+      
       <div className="flex justify-center gap-4 py-4 bg-gray-200">
         <button
           className={`px-4 py-2 rounded-md ${
@@ -103,7 +103,7 @@ const FullScreenChart = () => {
         </button>
       </div>
 
-      {/* Full-screen chart */}
+      
       <div className="flex-grow relative">
         {activeChart === 'area' ? (
           <ResponsiveContainer width="100%" height="100%">
@@ -113,7 +113,7 @@ const FullScreenChart = () => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis domain={[adjustedMin, adjustedMax]} /> {/* Dynamic Y-Axis */}
+              <YAxis domain={[adjustedMin, adjustedMax]} /> 
               <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Area
@@ -121,16 +121,16 @@ const FullScreenChart = () => {
                 dataKey="price"
                 stroke="#2563eb"
                 fill="#3b82f6"
-                strokeWidth={3} // Increase stroke width for visibility
+                strokeWidth={3}
               />
-              {/* Add a reference line for the average BTC price */}
+              
               <ReferenceLine
                 y={averagePrice}
                 label={`Avg: $${averagePrice.toFixed(2)}`}
                 stroke="red"
                 strokeWidth={2}
                 labelStyle={{ fill: 'red', fontSize: '14px' }}
-                strokeDasharray="5 5" // Make it dashed for better visibility
+                strokeDasharray="5 5" 
               />
             </AreaChart>
           </ResponsiveContainer>
@@ -142,23 +142,23 @@ const FullScreenChart = () => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis domain={[adjustedMin, adjustedMax]} /> {/* Dynamic Y-Axis */}
+              <YAxis domain={[adjustedMin, adjustedMax]} /> 
               <Tooltip content={<CustomTooltip />} />
               <Legend />
               <Line
                 type="monotone"
                 dataKey="price"
                 stroke="#3b82f6"
-                strokeWidth={3} // Increase stroke width for better visibility
+                strokeWidth={3} 
               />
-              {/* Add a reference line for the average BTC price */}
+              
               <ReferenceLine
                 y={averagePrice}
                 label={`Avg: $${averagePrice.toFixed(2)}`}
                 stroke="red"
                 strokeWidth={2}
                 labelStyle={{ fill: 'red', fontSize: '14px' }}
-                strokeDasharray="5 5" // Dashed line for distinction
+                strokeDasharray="5 5" 
               />
             </LineChart>
           </ResponsiveContainer>
